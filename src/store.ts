@@ -4,8 +4,8 @@ import { createStore, applyMiddleware, AnyAction } from 'redux';
 import rootReducer, {
   AppAction,
   AppState,
-  HelloState,
-  HelloAction,
+  WeatherAction,
+  WeatherState,
 } from './reducers';
 
 type DispatchWrapper<Props extends AnyAction, State> = ThunkDispatch<
@@ -15,8 +15,8 @@ type DispatchWrapper<Props extends AnyAction, State> = ThunkDispatch<
 >;
 
 type AppDispatch = DispatchWrapper<AppAction, AppState>;
-type HelloDispatch = DispatchWrapper<HelloAction, HelloState>;
+type WeatherDispatch = DispatchWrapper<WeatherAction, WeatherState>;
 
-export type Dispatch = AppDispatch & HelloDispatch;
+export type Dispatch = AppDispatch & WeatherDispatch;
 
 export default createStore(rootReducer, applyMiddleware(thunk));

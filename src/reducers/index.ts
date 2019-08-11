@@ -2,11 +2,11 @@
 import { combineReducers, AnyAction } from 'redux';
 
 export * from './app';
-export * from './hello';
+export * from './weather';
 
 import app from './app';
-import hello from './hello';
-import { AppState, HelloState } from '.';
+import weather from './weather';
+import { AppState, WeatherState } from '.';
 
 export interface Action<P> extends AnyAction {
   readonly payload: Partial<P>;
@@ -14,10 +14,10 @@ export interface Action<P> extends AnyAction {
 
 export interface StateMap {
   readonly app: AppState;
-  readonly hello: HelloState;
+  readonly weather: WeatherState;
 }
 
 export default combineReducers<StateMap>({
   app,
-  hello,
+  weather,
 });

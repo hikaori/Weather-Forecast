@@ -3,6 +3,9 @@ import { CurrentTemp, MinMaxTemp } from '../components';
 import cosLogo from '../assets/imgs/Sun.png';
 import styled from 'styled-components';
 import { media } from '../util/Helper';
+import { connect } from 'react-redux';
+import { StateMap } from '../reducers';
+import { Weather } from '../entities';
 
 const BoxDiv = styled.div`
   display: flex;
@@ -13,8 +16,14 @@ const BoxDiv = styled.div`
   }
 `;
 
-class WeatherMainSection extends Component {
+interface OwnProps {
+  storeData: Weather;
+}
+interface OwnState {}
+
+class WeatherMainSection extends Component<OwnProps, OwnState> {
   render() {
+    const data = this.props.storeData;
     return (
       <BoxDiv>
         <div>
@@ -22,11 +31,15 @@ class WeatherMainSection extends Component {
         </div>
         <div>
           <CurrentTemp />
-          <MinMaxTemp />
-          <MinMaxTemp />
+          <MinMaxTemp value={data.main.temp_max} />
+          <MinMaxTemp value={data.main.temp_min} />
         </div>
       </BoxDiv>
     );
   }
 }
-export default WeatherMainSection;
+const mapStateToProps = (state: StateMap) => ({
+  storeData: state.weather.data,
+});
+
+export default connect(mapStateToProps)(WeatherMainSection);

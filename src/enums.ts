@@ -5,3 +5,7 @@ export enum AppActionType {
 export enum HelloActionType {
   Update = 'HelloAction.Update',
 }
+
+export enum WeatherActionType {
+  Update = 'WeatherAction.Update',
+}

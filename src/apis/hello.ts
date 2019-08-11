@@ -1,16 +1,16 @@
 import { Request } from './request';
-import { Sample } from '../entities';
+import { Weather } from '../entities';
 
 export class HelloApi {
-  static async getAll(): Promise<Sample[]> {
-    return Request.get('hello');
+  static async getAll(): Promise<Weather[]> {
+    return Request.get('');
   }
 
-  static async get(id: number): Promise<Sample | null> {
+  static async get(id: number): Promise<Weather | null> {
     return Request.get(`hello/${id}`);
   }
 
-  static async create(text: string, email: string): Promise<Sample> {
+  static async create(text: string, email: string): Promise<Weather> {
     return Request.post('hello');
   }
 }

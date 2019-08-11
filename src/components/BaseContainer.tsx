@@ -2,9 +2,7 @@ import React, { Component } from 'react';
 import { SearchSection, WeatherSection } from '.';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { hello } from '../actions';
 import { StateMap } from '../reducers';
-import { Sample } from '../entities';
 import { Dispatch } from '../store';
 import { media } from '../util/Helper';
 const FlexDiv = styled.div`
@@ -17,14 +15,10 @@ const FlexDiv = styled.div`
 `;
 
 interface Props {
-  samples: Sample[];
   dispatch: Dispatch;
 }
 
 class BaseContainer extends Component<Props> {
-  componentDidMount() {
-    this.props.dispatch(hello.getAll());
-  }
   render() {
     return (
       <FlexDiv>
@@ -35,7 +29,7 @@ class BaseContainer extends Component<Props> {
   }
 }
 const mapStateToProps = (state: StateMap) => ({
-  samples: state.hello.samples,
+  storeData: state.weather.data,
 });
 
 export default connect(mapStateToProps)(BaseContainer);
