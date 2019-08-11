@@ -17,18 +17,24 @@ const ItemBoxDiv = styled.div`
   }
 `;
 
-class WeatherExpandInfo extends Component {
+interface OwnProps {
+  rainValue?: string | number;
+  windValue: number;
+  humidityValue: number;
+}
+
+class WeatherExpandInfo extends Component<OwnProps> {
   render() {
     return (
       <BoxDiv>
         <ItemBoxDiv>
-          rain : <div className="value">5 mm</div>
+          rain : <div className="value">{this.props.rainValue} mm</div>
         </ItemBoxDiv>
         <ItemBoxDiv>
-          wind : <div className="value">5 m/s</div>
+          wind : <div className="value">{this.props.windValue} m/s</div>
         </ItemBoxDiv>
         <ItemBoxDiv>
-          humidity : <div className="value">96 %</div>
+          humidity : <div className="value">{this.props.humidityValue} %</div>
         </ItemBoxDiv>
       </BoxDiv>
     );

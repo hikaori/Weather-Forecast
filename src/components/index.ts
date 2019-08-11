@@ -1,3 +1,4 @@
+import BaseContainer from './BaseContainer';
 import SearchSection from './SearchSection';
 import Input from './Input';
 import { Button } from '../components/Button';
@@ -8,6 +9,7 @@ import MinMaxTemp from './MinMaxTemp';
 import WeatherExpandInfo from './WeatherExpandInfo';
 
 export {
+  BaseContainer,
   SearchSection,
   Input,
   Button,

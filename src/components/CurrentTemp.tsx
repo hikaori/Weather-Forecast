@@ -1,6 +1,9 @@
 import React, { Component } from 'react';
 import styled from 'styled-components';
 import fonts from '../fonts';
+import { connect } from 'react-redux';
+import { StateMap } from '../reducers';
+import { Weather } from '../entities';
 
 const BoxDiv = styled.div`
   display: flex;
@@ -14,8 +17,14 @@ const CurrentTempNum = styled.div`
   font-size: ${fonts.big};
 `;
 
-class CurrentTemp extends Component {
+interface OwnProps {
+  storeData: Weather;
+}
+interface OwnState {}
+
+class CurrentTemp extends Component<OwnProps, OwnState> {
   render() {
+    const data = this.props.storeData;
     return (
       <BoxDiv>
         <CurrentTempNum>19</CurrentTempNum>
@@ -26,4 +35,8 @@ class CurrentTemp extends Component {
     );
   }
 }
-export default CurrentTemp;
+const mapStateToProps = (state: StateMap) => ({
+  storeData: state.weather.data,
+});
+
+export default connect(mapStateToProps)(CurrentTemp);
