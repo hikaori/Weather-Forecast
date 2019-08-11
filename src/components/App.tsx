@@ -1,23 +1,14 @@
 import React, { Component } from 'react';
-import { SearchSection, WeatherSection } from '../components';
-import styled from 'styled-components';
-import { media } from '../util/Helper';
-const FlexDiv = styled.div`
-  display: flex;
-  padding: 10%;
-  ${media.phone`
-    flex-direction: column;
-    box-sizing: border-box;
-  `}
-`;
+import { BaseContainer } from '../components';
+import { Provider } from 'react-redux';
+import store from '../store';
 
 class App extends Component {
   render() {
     return (
-      <FlexDiv>
-        <SearchSection />
-        <WeatherSection />
-      </FlexDiv>
+      <Provider store={store}>
+        <BaseContainer />
+      </Provider>
     );
   }
 }
