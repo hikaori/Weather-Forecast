@@ -4,11 +4,12 @@ import { SearchAreaSection } from '../components/SectionStyle';
 import { connect } from 'react-redux';
 import { weather } from '../actions';
 import { StateMap } from '../reducers';
-import { Weather } from '../entities';
+import { Weather, App } from '../entities';
 import { Dispatch } from '../store';
 import { getApi } from '../util/Api';
 
 interface OwnProps {
+  appStoreData: App;
   storeData: Weather;
   dispatch: Dispatch;
 }
@@ -16,7 +17,8 @@ interface OwnState {}
 
 class SearchSection extends Component<OwnProps, OwnState> {
   async getData() {
-    const data = await getApi('Lindon');
+    const cityName = this.props.appStoreData.inputValue;
+    const data = await getApi(cityName);
     this.props.dispatch(weather.update(data));
   }
   handleClick = () => {
@@ -35,6 +37,7 @@ class SearchSection extends Component<OwnProps, OwnState> {
 
 const mapStateToProps = (state: StateMap) => ({
   storeData: state.weather.data,
+  appStoreData: state.app.data,
 });
 
 export default connect(mapStateToProps)(SearchSection);
