@@ -1,7 +1,9 @@
 export interface Weather {
   weather: [
     {
+      id: number;
       main: string;
+      description: string;
     }
   ];
 
