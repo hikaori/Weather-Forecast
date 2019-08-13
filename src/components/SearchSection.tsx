@@ -19,7 +19,7 @@ class SearchSection extends Component<OwnProps, OwnState> {
   async getData() {
     const cityName = this.props.appStoreData.inputValue;
     const data = await getApi(cityName);
-    this.props.dispatch(weather.update(data));
+    await this.props.dispatch(weather.update(data));
   }
   handleClick = () => {
     this.getData();

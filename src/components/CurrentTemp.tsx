@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import classNames from 'classnames';
+import { convertKtoD, convertKtoF } from '../util/tempConverter';
 import styled from 'styled-components';
 import fonts from '../fonts';
 import { connect } from 'react-redux';
 import { StateMap } from '../reducers';
 import { Weather } from '../entities';
+import { Dispatch } from '../store';
 
 const BoxDiv = styled.div`
   display: flex;
@@ -11,6 +14,10 @@ const BoxDiv = styled.div`
   align-items: baseline;
   .unit {
     font-size: ${fonts.middle};
+    color: #ccc;
+  }
+  .unit.clicked {
+    color: #000;
   }
 `;
 const CurrentTempNum = styled.div`
@@ -19,18 +26,53 @@ const CurrentTempNum = styled.div`
 
 interface OwnProps {
   storeData: Weather;
+  dispatch: Dispatch;
 }
-interface OwnState {}
+interface OwnState {
+  isDClicked: boolean;
+}
 
 class CurrentTemp extends Component<OwnProps, OwnState> {
+  constructor(ownProps: OwnProps, ownState: OwnState) {
+    super(ownProps, ownState);
+    this.state = {
+      isDClicked: true,
+    };
+  }
+
+  handleClickD = () => {
+    this.setState({
+      isDClicked: true,
+    });
+  };
+
+  handlelickF = () => {
+    this.setState({
+      isDClicked: false,
+    });
+  };
+
   render() {
-    const data = this.props.storeData;
     return (
       <BoxDiv>
-        <CurrentTempNum>19</CurrentTempNum>
-        <div className="unit">°C</div>
+        <CurrentTempNum>
+          {this.state.isDClicked
+            ? convertKtoD(this.props.storeData.main.temp)
+            : convertKtoF(this.props.storeData.main.temp)}
+        </CurrentTempNum>
+        <div
+          className={classNames('unit', { clicked: this.state.isDClicked })}
+          onClick={this.handleClickD}
+        >
+          °C
+        </div>
         <div className="unit">|</div>
-        <div className="unit">°F</div>
+        <div
+          className={classNames('unit', { clicked: !this.state.isDClicked })}
+          onClick={this.handlelickF}
+        >
+          °F
+        </div>
       </BoxDiv>
     );
   }
