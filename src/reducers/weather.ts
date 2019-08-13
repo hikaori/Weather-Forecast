@@ -15,7 +15,9 @@ const initState: WeatherState = {
   data: {
     weather: [
       {
+        id: 0,
         main: '',
+        description: '',
       },
     ],
     main: {

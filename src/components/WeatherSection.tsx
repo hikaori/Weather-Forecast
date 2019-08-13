@@ -9,6 +9,7 @@ import { Weather } from '../entities';
 
 const CityNameDiv = styled.section`
   font-size: ${fonts.big};
+  font-weight: bold;
 `;
 const WeatherDescription = styled.section`
   font-size: ${fonts.middle};
