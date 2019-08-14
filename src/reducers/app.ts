@@ -14,6 +14,11 @@ export type AppAction = Action<AppState>;
 const initState: AppState = {
   data: {
     inputValue: '',
+    clickedUnit: 'C',
+    maxTempC: 0,
+    minTempC: 0,
+    maxTempF: 0,
+    minTempF: 0,
   },
 };
 

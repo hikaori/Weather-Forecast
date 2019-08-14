@@ -10,8 +10,10 @@ const BoxDiv = styled.div`
 `;
 
 interface OwnProps {
+  title: string;
+  unit: string;
   storeData: Weather;
-  value: number;
+  value: number | undefined;
 }
 interface OwnState {}
 
@@ -19,8 +21,8 @@ class MinMaxTemp extends Component<OwnProps, OwnState> {
   render() {
     return (
       <BoxDiv>
-        min :<span>{this.props.value}</span>
-        <span>°C</span>
+        {this.props.title} :<span>{this.props.value}</span>
+        <span>{this.props.unit}</span>
       </BoxDiv>
     );
   }
