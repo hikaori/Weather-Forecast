@@ -22,8 +22,14 @@ interface OwnState {}
 
 class WeatherSection extends Component<OwnProps, OwnState> {
   render() {
+    console.log(this.props.storeData);
     const data = this.props.storeData;
-    return (
+    return this.props.storeData === undefined ? (
+      <WeatherAreaSection>
+        <div>No data found</div>
+        <div>Enter different city</div>
+      </WeatherAreaSection>
+    ) : (
       <WeatherAreaSection>
         <CityNameDiv>{data.name ? data.name : 'CityName'}</CityNameDiv>
         <WeatherDescription>

@@ -21,15 +21,17 @@ class SearchSection extends Component<OwnProps, OwnState> {
     const cityName = this.props.appStoreData.inputValue;
     const data = await getApi(cityName);
     await this.props.dispatch(weather.update(data));
-    const maxC = await convertKtoC(this.props.storeData.main.temp_max);
-    const minC = await convertKtoC(this.props.storeData.main.temp_min);
-    await this.props.dispatch(
-      app.update({
-        ...this.props.appStoreData,
-        minTempC: minC,
-        maxTempC: maxC,
-      }),
-    );
+    if (this.props.storeData !== undefined) {
+      const maxC = await convertKtoC(this.props.storeData.main.temp_max);
+      const minC = await convertKtoC(this.props.storeData.main.temp_min);
+      await this.props.dispatch(
+        app.update({
+          ...this.props.appStoreData,
+          minTempC: minC,
+          maxTempC: maxC,
+        }),
+      );
+    }
   }
   handleClick = () => {
     this.getData();
