@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import classNames from 'classnames';
-import { convertKtoD, convertKtoF } from '../util/tempConverter';
+import { convertKtoC, convertKtoF } from '../util/tempConverter';
 import styled from 'styled-components';
 import fonts from '../fonts';
 import { connect } from 'react-redux';
 import { StateMap } from '../reducers';
-import { Weather } from '../entities';
+import { Weather, App } from '../entities';
+import { app } from '../actions';
+
 import { Dispatch } from '../store';
 
 const BoxDiv = styled.div`
@@ -26,50 +28,73 @@ const CurrentTempNum = styled.div`
 
 interface OwnProps {
   storeData: Weather;
+  AppAtoreData: App;
   dispatch: Dispatch;
 }
 interface OwnState {
-  isDClicked: boolean;
+  isClicked: string;
 }
 
 class CurrentTemp extends Component<OwnProps, OwnState> {
   constructor(ownProps: OwnProps, ownState: OwnState) {
     super(ownProps, ownState);
     this.state = {
-      isDClicked: true,
+      isClicked: 'C',
     };
   }
 
-  handleClickD = () => {
+  handleClick = (unit: string) => {
     this.setState({
-      isDClicked: true,
+      isClicked: unit,
     });
-  };
-
-  handlelickF = () => {
-    this.setState({
-      isDClicked: false,
-    });
+    let maxC;
+    let minC;
+    let maxF;
+    let minF;
+    let clickedUnit = 'C';
+    if (unit === 'C') {
+      maxC = convertKtoC(this.props.storeData.main.temp_max);
+      minC = convertKtoC(this.props.storeData.main.temp_min);
+      clickedUnit = 'C';
+    } else if (unit === 'F') {
+      maxF = convertKtoF(this.props.storeData.main.temp_max);
+      minF = convertKtoF(this.props.storeData.main.temp_min);
+      clickedUnit = 'F';
+    }
+    this.props.dispatch(
+      app.update({
+        ...this.props.AppAtoreData,
+        maxTempC: maxC,
+        minTempC: minC,
+        maxTempF: maxF,
+        minTempF: minF,
+        clickedUnit: clickedUnit,
+      }),
+    );
   };
 
   render() {
     return (
       <BoxDiv>
         <CurrentTempNum>
-          {this.state.isDClicked
-            ? convertKtoD(this.props.storeData.main.temp)
+          {this.state.isClicked === 'C'
+            ? convertKtoC(this.props.storeData.main.temp)
             : convertKtoF(this.props.storeData.main.temp)}
         </CurrentTempNum>
         <div
-          className={classNames('unit', { clicked: this.state.isDClicked })}
-          onClick={this.handleClickD}
+          className={classNames('unit', {
+            clicked: this.state.isClicked === 'C',
+          })}
+          onClick={() => this.handleClick('C')}
         >
           °C
         </div>
         <div className="unit">|</div>
         <div
-          className={classNames('unit', { clicked: !this.state.isDClicked })}
-          onClick={this.handlelickF}
+          className={classNames('unit', {
+            clicked: this.state.isClicked === 'F',
+          })}
+          onClick={() => this.handleClick('F')}
         >
           °F
         </div>
@@ -79,6 +104,7 @@ class CurrentTemp extends Component<OwnProps, OwnState> {
 }
 const mapStateToProps = (state: StateMap) => ({
   storeData: state.weather.data,
+  AppAtoreData: state.app.data,
 });
 
 export default connect(mapStateToProps)(CurrentTemp);

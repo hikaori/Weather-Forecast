@@ -1,7 +1,7 @@
-export function convertKtoD(Kvalue: number) {
+export function convertKtoC(Kvalue: number) {
   // 0 K - 273.15 = -273.1°C
   if (Kvalue === 0) {
-    return '';
+    return undefined;
   }
   const degree = Math.round(Kvalue - 273.15);
   return degree;

@@ -2,7 +2,6 @@ import defaultImg from '../assets/imgs/default.png';
 
 export function getImg(ImgName: string) {
   let serviceDataURL = `http://openweathermap.org/img/wn/${ImgName}@2x.png`;
-  console.log(serviceDataURL);
   return serviceDataURL;
 }
 export function getImgName(id: number) {

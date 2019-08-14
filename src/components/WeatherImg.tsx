@@ -21,7 +21,6 @@ interface OwnState {}
 class WeatherImg extends Component<OwnProps, OwnState> {
   createImg() {
     const imgName = getImgName(this.props.storeData.weather[0].id);
-    console.log(imgName);
     return getImg(imgName);
   }
   render() {

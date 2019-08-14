@@ -9,7 +9,7 @@ import { App } from '../entities';
 import { Dispatch } from '../store';
 
 interface OwnProps {
-  storeData: App;
+  appstoreData: App;
   dispatch: Dispatch;
 }
 interface OwnState {
@@ -56,7 +56,9 @@ class Input extends Component<OwnProps, OwnState> {
     this.setState({
       value: newValue,
     });
-    this.props.dispatch(app.update({ inputValue: newValue }));
+    this.props.dispatch(
+      app.update({ ...this.props.appstoreData, inputValue: newValue }),
+    );
   };
 
   // Autosuggest will call this function every time you need to update suggestions.
@@ -97,6 +99,6 @@ class Input extends Component<OwnProps, OwnState> {
   }
 }
 const mapStateToProps = (state: StateMap) => ({
-  storeData: state.app.data,
+  appstoreData: state.app.data,
 });
 export default connect(mapStateToProps)(Input);

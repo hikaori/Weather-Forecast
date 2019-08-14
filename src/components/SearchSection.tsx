@@ -1,8 +1,9 @@
 import React, { Component } from 'react';
 import { Button, Input } from '../components';
 import { SearchAreaSection } from '../components/SectionStyle';
+import { convertKtoC } from '../util/tempConverter';
 import { connect } from 'react-redux';
-import { weather } from '../actions';
+import { weather, app } from '../actions';
 import { StateMap } from '../reducers';
 import { Weather, App } from '../entities';
 import { Dispatch } from '../store';
@@ -20,6 +21,15 @@ class SearchSection extends Component<OwnProps, OwnState> {
     const cityName = this.props.appStoreData.inputValue;
     const data = await getApi(cityName);
     await this.props.dispatch(weather.update(data));
+    const maxC = await convertKtoC(this.props.storeData.main.temp_max);
+    const minC = await convertKtoC(this.props.storeData.main.temp_min);
+    await this.props.dispatch(
+      app.update({
+        ...this.props.appStoreData,
+        minTempC: minC,
+        maxTempC: maxC,
+      }),
+    );
   }
   handleClick = () => {
     this.getData();
